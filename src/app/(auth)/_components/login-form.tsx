@@ -8,7 +8,7 @@ import * as z from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Facebook, Loader } from "lucide-react";
+import { Eye, EyeOff, Facebook, Key, Loader, Mail } from "lucide-react";
 
 import {
   Card,
@@ -34,6 +34,7 @@ import { FormErrorStatus } from "./form-error-status";
 import { FormSuccessStatus } from "./form-success-status";
 import { LoginSchema } from "@/schemas/login-schema";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
 
 export const LoginForm = () => {
   const toast = useToast();
@@ -41,6 +42,9 @@ export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [successMessage, setSuccessMessage] = useState<string | undefined>();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => setIsVisible((prev) => !prev);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -76,15 +80,22 @@ export const LoginForm = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
+                  <FormItem className="group space-y-0">
+                    <FormLabel className="group-hover:text-btn text-xs font-bold text-muted-foreground">
+                      Email
+                    </FormLabel>
                     <FormControl>
-                      <Input
-                        disabled={isPending}
-                        {...field}
-                        placeholder="john-doe@gmail.com"
-                        type="email"
-                      />
+                      <div className="flex items-center justify-center border rounded-md px-1 space-x-1">
+                        <Mail className="font-bold w-4 h-4 text-btn" />
+                        <Input
+                          {...field}
+                          placeholder="john-doe@gmail.com"
+                          type="text"
+                          className="p-0 border-none hover:border-none  bg-none outline-none focus-visible:outline-none
+                          focus-visible:border-none focus-visible:ring-offset-0 border-0 focus:border-0 focus-visible:ring-0"
+                          disabled={isPending}
+                        />
+                      </div>
                     </FormControl>
 
                     <FormMessage />
@@ -96,15 +107,34 @@ export const LoginForm = () => {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
+                  <FormItem className="group space-y-0">
+                    <FormLabel className="group-hover:text-btn text-xs font-bold text-muted-foreground">
+                      Password
+                    </FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="*************"
-                        type="password"
-                        disabled={isPending}
-                      />
+                      <div className="flex items-center justify-center border rounded-md px-1 space-x-1">
+                        <Key className="font-bold w-4 h-4 text-btn" />
+                        <Input
+                          {...field}
+                          placeholder="jdkdk39393i@#"
+                          type={isVisible ? "text" : "password"}
+                          className="p-0 border-none hover:border-none  bg-none outline-none focus-visible:outline-none
+                          focus-visible:border-none focus-visible:ring-offset-0 border-0 focus:border-0 focus-visible:ring-0"
+                          disabled={isPending}
+                        />
+
+                        {isVisible ? (
+                          <EyeOff
+                            onClick={toggleVisibility}
+                            className="font-bold w-4 h-4 text-btn cursor-pointer"
+                          />
+                        ) : (
+                          <Eye
+                            onClick={toggleVisibility}
+                            className="font-bold w-4 h-4 text-btn cursor-pointer"
+                          />
+                        )}
+                      </div>
                     </FormControl>
 
                     <FormMessage />
@@ -136,23 +166,25 @@ export const LoginForm = () => {
       </CardContent>
 
       <div className="flex items-center justify-center px-4 my-4">
-        <div className="border-[1px] border-gray-300 w-full mx-2" /> OR{" "}
+        <div className="border-[1px] border-gray-300 w-full mx-2" /> OR
         <div className="border-[1px] border-gray-300 w-full mx-2" />
       </div>
 
       <CardFooter className="gap-3">
         <Button
           variant="outline"
-          className="w-full hover:bg-red-500 hover:text-white font-extrabold text-red-700"
+          className="w-full hover:bg-red-400 gap-2 text-muted-foreground"
         >
-          G
+          <Image src="/google.png" alt="Github logo" width={15} height={15} />
+          Google
         </Button>
 
         <Button
           variant="outline"
-          className="w-full hover:bg-blue-500 hover:text-white group"
+          className="w-full hover:bg-gray-400 group gap-2 text-muted-foreground"
         >
-          <Facebook className="w-4 h-4 text-blue-600 group-hover:text-white" />
+          <Image src="/github.png" alt="Github logo" width={15} height={15} />
+          Github
         </Button>
       </CardFooter>
 
