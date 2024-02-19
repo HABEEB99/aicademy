@@ -98,6 +98,11 @@ body,
     @apply w-full min-h-screen scroll-mt-24 flex flex-col items-center;
   }
 
+  .input {
+    @apply p-0 border-none hover:border-none  bg-none outline-none focus-visible:outline-none
+    focus-visible:border-none focus-visible:ring-offset-0 border-0 focus:border-0 focus-visible:ring-0;
+  }
+
   .slider-box {
     position: relative;
     height: 400px;
@@ -126,3 +131,5 @@ body,
     }
   }
 }
+
+@import "~@uploadthing/react/styles.css";

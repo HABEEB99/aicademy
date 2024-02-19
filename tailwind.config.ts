@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-const config = {
+const config = withUt({
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -19,11 +20,11 @@ const config = {
     },
     extend: {
       colors: {
-        light: "#CFCCD6",
-        dark: "#322E18",
-        btn: "#B7B5E4",
-        icon: "#847979",
-        modal: "#BBC2E2",
+        light: "#F3EFF5",
+        dark: "#070600",
+        btn: "#4E598C",
+        icon: "#EA526F",
+        modal: "#7E8D85",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -84,6 +85,6 @@ const config = {
     require("tailwind-scrollbar"),
     require("tailwind-scrollbar-hide"),
   ],
-} satisfies Config;
+}) satisfies Config;
 
 export default config;
